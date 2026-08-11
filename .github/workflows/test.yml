@@ -22,6 +22,6 @@ jobs:
         run: |
           test ! -f src/adaptive_agent_emotion/observer.py
           test ! -f src/adaptive_agent_emotion/advisor.py
-      - name: Privacy scan source
+      - name: Privacy scan public content
         run: |
-          ! grep -RniE 'Kira|Thorsten|\.kira|\.config/kira|OpenRouter|Gemini|PayPal|password|api[_-]?key|token|secret' src tests --exclude='*.pyc'
+          ! grep -RniE 'Kira|Thorsten|\.kira|\.config/kira|OpenRouter|Gemini|PayPal|password|api[_-]?key|token|secret' src tests README.md PRO.md --exclude='*.pyc'
