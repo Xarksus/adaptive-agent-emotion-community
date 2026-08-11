@@ -6,13 +6,13 @@ A model-agnostic affect/state engine for Python AI agents.
 
 - five-channel affect/state model
 - configurable baselines and ceilings
-- decay and recovery
-- circadian baseline bias
-- session-fatigue signal
+- non-accumulating circadian baseline offsets
+- explicit time advancement through `tick()`
+- session-fatigue signal and reset support
 - generic familiar/unfamiliar voice events
 - tone-response events
-- persistent JSON state
-- model-neutral `policy_vector()` output
+- atomic JSON persistence
+- read-only model-neutral `policy_vector()` output
 - dependency-free Python core
 
 ## Install
@@ -30,10 +30,14 @@ from adaptive_agent_emotion import AffectEvent, EmotionStateEngine
 
 engine = EmotionStateEngine("agent_state.json")
 engine.apply_event(AffectEvent("tool_failed", {"cortisol": 12, "dopamine": -5}))
-print(engine.policy_vector())
+engine.tick()  # explicit time-dependent decay/coupling
+print(engine.policy_vector())  # read-only
+engine.save()
 ```
 
-`policy_vector()` returns normalized `arousal`, `stress`, `social_affinity`, `stability`, and `fatigue` signals that can be consumed by any agent policy or prompt layer.
+`policy_vector()` returns normalized `arousal`, `stress`, `social_affinity`, `stability`, and `fatigue` signals. Reading the vector does not advance or mutate the engine state.
+
+Circadian behavior is applied as an effective baseline offset during `tick()` / `apply_decay()` and does not accumulate into stored baselines.
 
 ## Community vs Pro
 
@@ -54,7 +58,7 @@ pip install -e . pytest
 pytest -q
 ```
 
-GitHub Actions tests Python 3.10, 3.11, 3.12 and 3.13 and performs a source privacy scan.
+GitHub Actions tests Python 3.10, 3.11, 3.12 and 3.13, verifies the Community/Pro boundary, and scans public source, tests and product documentation for private markers.
 
 ## License
 
