@@ -30,3 +30,12 @@ class AffectEvent:
     context: str = ""
     metadata: dict[str, Any] = field(default_factory=dict)
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+
+@dataclass(slots=True)
+class DecisionRecord:
+    context: str
+    cause: str
+    expectation: str
+    system_action: str = ""
+    stress_before: float = 0.0
