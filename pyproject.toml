@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "adaptive-agent-emotion"
 version = "0.1.0"
-description = "Model-agnostic affect/state engine for Python AI agents"
+description = "Open-source affect/state engine for AI agents"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Xarksus"}]
